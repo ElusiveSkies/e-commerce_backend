@@ -1,28 +1,72 @@
-const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const router = require("express").Router();
+const { Tag, Product, ProductTag } = require("../../models");
 
-// The `/api/tags` endpoint
-
-router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
+// finds all tags
+router.get("/", (req, res) => {
+  Tag.findAll({
+    include: [Product],
+  })
+    // displays json of tags including products
+    .then((tags) => {
+      res.json(tags);
+    })
+    // displays errors
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+// finds a single tag by its `id`
+router.get("/:id", (req, res) => {
+  Tag.findByPk(req.params.id, {
+    include: [Product],
+  })
+    // displays json of tags
+    .then((tags) => {
+      res.json(tags);
+    })
+    // displays errors
+    .catch((err) => res.json(err));
 });
 
-router.post('/', (req, res) => {
-  // create a new tag
+// creates a new tag
+router.post("/", (req, res) => {
+  Tag.create(req.body)
+    .then((newTag) => {
+      return res.json(newTag);
+    })
+    .catch((err) => res.json(err));
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+// updates a tag's name by its `id` value
+router.put("/:id", (req, res) => {
+  Tag.update(
+    {
+      tag_name: req.body.tag_name,
+    },
+    {
+      where: { id: req.params.id },
+    }
+  )
+    // displays number of tags updated
+    .then((updatedTag) => {
+      return res.json(updatedTag);
+    })
+    // displays errors
+    .catch((err) => res.json(err));
 });
 
-router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
+// deletes on tag by its `id` value
+router.delete("/:id", (req, res) => {
+  Tag.destroy({
+    where: { id: req.params.id },
+  })
+    // displays number of tags deleted
+    .then((removeTag) => {
+      return res.json(removeTag);
+    })
+    // displays errors
+    .catch((err) => res.json(err));
 });
 
 module.exports = router;
