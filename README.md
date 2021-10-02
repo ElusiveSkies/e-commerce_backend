@@ -7,6 +7,7 @@ E-Commerce Backend
 ## Table of Contents
 
 - [Installation](#Installation)
+- [Technology](#Technology)
 - [Usage](#Usage)
 - [License](#License)
 - [Questions](#Questions)
@@ -27,6 +28,13 @@ THEN the data for each of these routes is displayed in a formatted JSON
 WHEN I test API POST, PUT, and DELETE routes in Insomnia Core
 THEN I am able to successfully create, update, and delete data in my database
 ```
+
+## Technology
+
+- JavaScript
+- MySQL
+- Sequelize
+
 
 ## Installation
 
@@ -65,7 +73,7 @@ Video of Usage
 
 ## License
 
-MIT
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Questions
 
